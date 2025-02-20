@@ -57,8 +57,8 @@ String listFiles(bool ishtml = false);
 void configureWebServer() ;
 String humanReadableSize(const size_t bytes);
 // Replace with your network credentials
-extern char* ssid;
-extern char* password;                                            
+String ssid     = "+++";
+String password = "---";
 // Create AsyncWebServer object on port 80
 AsyncWebServer server(80);
 
@@ -68,16 +68,36 @@ void initWiFi() {
  display->setTextColor(0);
  display->setFont(&FreeMono8pt7b);
  display->setCursor(0,10);
+ if(WiFi.status() == WL_CONNECTED)
+  {display->println("Connected.");
+   return;
+  }
  display->println("Connecting ...");
 
   WiFi.mode(WIFI_STA);
-  WiFi.begin(ssid, password);
-  Serial.print("Connecting to WiFi ..");
-  while (WiFi.status() != WL_CONNECTED) {
-    Serial.print('.');
-    delay(1000);
+Serial.println();
+   Serial.println("Connecting to WiFi");
+   WiFi.begin( );
+  for(int i=0;(WiFi.status() != WL_CONNECTED) && (i<50);i++) {
+    delay(100);
+    Serial.print(".");
   }
-  display->println("Connected  ...");
+  if(WiFi.status() != WL_CONNECTED)
+   {WiFi.begin(preferences.getString("ssid",ssid) ,preferences.getString("password", password));
+    for(int i=0;(WiFi.status() != WL_CONNECTED) && (i<100);i++) {
+     delay(100);
+     Serial.print(":");
+    }
+   }
+   if(WiFi.status() != WL_CONNECTED)
+   {
+   }
+   else
+   {preferences.putString("ssid",preferences.getString("ssid",ssid));
+    preferences.putString("password",preferences.getString("password", password));
+   }
+  Serial.println("+");
+   display->println("Connected  ...");
    Serial.println(WiFi.localIP());
  display->println(WiFi.localIP());
 }
