@@ -136,8 +136,8 @@ static int do_ping_cmd(ip_addr_t target_addr)//int argc, char **argv)
   
  #include <WiFi.h>
 
-const char* ssid     = "Telenet6899579";
-const char* password = "Lbccy8bevisy4asg";
+const char* ssid     = "----";
+const char* password = "----";
 
 void setupIPS(bool init) {
   if (init)
