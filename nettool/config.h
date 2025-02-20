@@ -47,6 +47,7 @@ extern void loopWeb();
 extern void setupWeb(bool);
 extern void click0(int);
 extern void click444(int);
+extern void initWiFi();
 
 typedef struct
 {
