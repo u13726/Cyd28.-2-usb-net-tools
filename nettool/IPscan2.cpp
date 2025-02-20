@@ -136,24 +136,15 @@ static int do_ping_cmd(ip_addr_t target_addr)//int argc, char **argv)
   
  #include <WiFi.h>
 
-const char* ssid     = "---";
-const char* password = "---";
 
 void setupIPS(bool init) {
   if (init)
-  {Serial.println();
-   Serial.println("Connecting to WiFi");
-   WiFi.begin(ssid, password);
-  while (WiFi.status() != WL_CONNECTED) {
-    delay(100);
-    Serial.print(".");
-  }
-  Serial.println("+");
-  display->fillScreen(0xFFFFFF);
+  {display->fillScreen(0xFFFFFF);
   display->setTextSize(1);
   display->setTextColor(0);
   display->setFont(&FreeMono8pt7b);
   display->setCursor(10,10);
+  initWiFi();
   }
   else
   {WiFi.disconnect(true);
